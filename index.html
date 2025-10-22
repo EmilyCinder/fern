@@ -7,7 +7,9 @@
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Exo:wght@400;600;700&display=swap" rel="stylesheet">
-  <script src="https://kit.fontawesome.com/a2d9d6c64d.js" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/js/all.min.js" crossorigin="anonymous"></script>
+
+
 
   <style>
     body {
@@ -123,6 +125,18 @@
       gap: 2rem;
       z-index: 20;
     }
+
+    .platform-icon i {
+  color: #ffb6b3;
+  text-shadow: 0 0 10px #ffb6b3, 0 0 20px #ffb6b3;
+  transition: all 0.3s ease;
+}
+.platform-icon i:hover {
+  color: #ffb6b3;
+  text-shadow: 0 0 24px #ffb6b3, 0 0 48px #ffb6b3;
+  transform: scale(1.1);
+}
+
     #desktop-nav a { font-size: 1.1rem; letter-spacing: 0.1em; }
 
     #menu-btn {
@@ -196,33 +210,58 @@
   <section id="home" class="hidden relative h-screen w-full overflow-hidden">
     <video id="video-bg" autoplay muted loop playsinline src="your-video.mp4"></video>
 
-    <!-- Desktop Nav -->
-    <nav id="desktop-nav">
-      <a href="#home" class="hover-glow">Home</a>
-      <a href="#bio" class="hover-glow">Biography</a>
-      <a href="#gallery" class="hover-glow">Gallery</a>
-      <a href="#pricing" class="hover-glow">Pricing</a>
-      <a href="#contact" class="hover-glow">Contact</a>
-      <a href="https://your-insta-link" target="_blank" aria-label="Instagram">
-        <i class="fab fa-instagram text-2xl insta-icon"></i>
-      </a>
-    </nav>
+<!-- Desktop Nav -->
+<nav id="desktop-nav" class="flex items-center justify-between w-full px-8 absolute top-4 left-0 z-20">
+  <!-- Left: Social Icons -->
+  <div class="flex gap-4">
+    <a href="https://www.tiktok.com/@thewookedwitch" target="_blank" rel="noopener noreferrer" class="platform-icon">
+      <i class="fab fa-tiktok text-2xl"></i>
+    </a>
+    <a href="https://www.instagram.com/thewookedwitch/" target="_blank" rel="noopener noreferrer" class="platform-icon">
+      <i class="fab fa-instagram text-2xl"></i>
+    </a>
+  </div>
+
+  <!-- Center: Nav Links -->
+  <div class="flex gap-6 justify-center">
+    <a href="#home" class="hover-glow">Home</a>
+    <a href="#bio" class="hover-glow">Biography</a>
+    <a href="#gallery" class="hover-glow">Gallery</a>
+    <a href="#pricing" class="hover-glow">Pricing</a>
+    <a href="#contact" class="hover-glow">Contact</a>
+  </div>
+
+  <!-- Empty div keeps layout balanced -->
+  <div class="w-12"></div>
+</nav>
+
+
+    
+ 
 
     <!-- Mobile Nav -->
-    <div id="menu-btn" class="menu-btn md:hidden">
-      <span></span><span></span><span></span>
-    </div>
+<div id="menu-btn" class="menu-btn md:hidden">
+  <span></span><span></span><span></span>
+</div>
 
-    <nav id="mobile-menu" class="flex-col text-3xl">
-      <a href="#home" class="hover-glow">Home</a>
-      <a href="#bio" class="hover-glow">Biography</a>
-      <a href="#gallery" class="hover-glow">Gallery</a>
-      <a href="#pricing" class="hover-glow">Pricing</a>
-      <a href="#contact" class="hover-glow">Contact</a>
-      <a href="https://your-insta-link" target="_blank" aria-label="Instagram">
-        <i class="fab fa-instagram text-5xl insta-icon"></i>
-      </a>
-    </nav>
+<nav id="mobile-menu" class="flex-col text-3xl">
+  <a href="#home" class="hover-glow">Home</a>
+  <a href="#bio" class="hover-glow">Biography</a>
+  <a href="#gallery" class="hover-glow">Gallery</a>
+  <a href="#pricing" class="hover-glow">Pricing</a>
+  <a href="#contact" class="hover-glow">Contact</a>
+
+  <!-- Social Icons -->
+  <div class="flex gap-8 mt-8">
+    <a href="https://www.tiktok.com/@thewookedwitch" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
+      <i class="fab fa-tiktok text-5xl insta-icon"></i>
+    </a>
+    <a href="https://www.instagram.com/thewookedwitch/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+      <i class="fab fa-instagram text-5xl insta-icon"></i>
+    </a>
+  </div>
+</nav>
+
 
     <!-- Center Logo -->
     <div class="absolute inset-0 flex items-center justify-center z-10">
@@ -278,7 +317,7 @@
   <!-- CONTACT -->
   <section id="contact" class="fade-section min-h-screen bg-black flex flex-col items-center justify-center">
     <h2 class="text-4xl hover-glow mb-4">Contact</h2>
-    <p>Email: <a href="mailto:your@email.com" class="hover-glow"></a></p>
+    <p>Email: thewookedwitch@gmail.com <a href="mailto:your@email.com" class="hover-glow"></a></p>
   </section>
 
   <script>
