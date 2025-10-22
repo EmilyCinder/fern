@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VJ Press Kit</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Exo:wght@400;600;700&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/a2d9d6c64d.js" crossorigin="anonymous"></script>
+
+  <style>
+    body {
+      font-family: 'Exo', sans-serif;
+      background-color: #0b0010;
+      overflow-x: hidden;
+      color: white;
+    }
+
+    :root {
+      --lilac: #c6a0ff;
+      --orange: #ffb6b3;
+      --eggplant: #1a001a;
+    }
+
+    .hover-glow { transition: all 0.3s ease; }
+    .hover-glow:hover {
+      color: var(--orange);
+      text-shadow: 0 0 12px var(--orange), 0 0 24px var(--lilac);
+    }
+
+    .insta-icon {
+      color: var(--lilac);
+      text-shadow: 0 0 10px var(--lilac), 0 0 20px var(--orange);
+      transition: all 0.3s ease;
+    }
+    .insta-icon:hover {
+      color: var(--orange);
+      text-shadow: 0 0 12px var(--orange), 0 0 24px var(--lilac);
+      transform: scale(1.15);
+    }
+
+    body.splash-active { overflow: hidden; }
+
+    /* Splash */
+    #splash {
+      position: fixed;
+      inset: 0;
+      background: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      z-index: 100;
+    }
+
+    #splash img {
+      max-height: 70vh;
+      max-width: 80vw;
+      object-fit: contain;
+      z-index: 1;
+    }
+
+    #enter-btn {
+      font-size: 7rem;
+      text-transform: uppercase;
+      transition: transform 0.5s ease;
+      position: absolute;
+      bottom: 5%;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+    }
+
+    #enter-btn:hover {
+      transform: translateX(-50%) scale(1.05);
+      text-shadow: 0 0 20px var(--orange), 0 0 40px var(--lilac);
+    }
+
+    @keyframes glitchOut {
+      0%   { clip-path: inset(0 0 0 0); transform: skew(0deg); }
+      15%  { clip-path: inset(10% 0 15% 0); transform: skew(2deg); }
+      35%  { clip-path: inset(5% 0 25% 0); transform: skew(-3deg); }
+      55%  { clip-path: inset(20% 0 10% 0); transform: skew(3deg); }
+      75%  { clip-path: inset(15% 0 20% 0); transform: skew(-2deg); }
+      100% { clip-path: inset(0 0 100% 0); transform: skew(0deg); }
+    }
+    .glitch-active { animation: glitchOut 1s steps(2, end) forwards; }
+
+    #home { visibility: hidden; }
+    #home.revealed { visibility: visible; }
+
+    #main-logo {
+      width: 80vw;
+      max-width: 900px;
+      opacity: 0;
+      transition: opacity 2s ease, transform 2s ease;
+      filter: drop-shadow(0 0 20px var(--lilac)) drop-shadow(0 0 40px var(--orange));
+      transform: scale(0.9);
+    }
+    #main-logo.visible {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    #video-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 0;
+    }
+
+    #desktop-nav {
+      position: absolute;
+      top: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      gap: 2rem;
+      z-index: 20;
+    }
+    #desktop-nav a { font-size: 1.1rem; letter-spacing: 0.1em; }
+
+    #menu-btn {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+      cursor: pointer;
+      z-index: 30;
+    }
+    #menu-btn span {
+      display: block;
+      width: 25px;
+      height: 3px;
+      background: white;
+      transition: all 0.3s ease;
+    }
+    .menu-btn.open span:nth-child(1) { transform: rotate(45deg) translateY(8px); }
+    .menu-btn.open span:nth-child(2) { opacity: 0; }
+    .menu-btn.open span:nth-child(3) { transform: rotate(-45deg) translateY(-8px); }
+
+    #mobile-menu {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.95);
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 2rem;
+      text-align: center;
+      z-index: 25;
+    }
+    #mobile-menu.active { display: flex; }
+
+    .fade-section {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 1s ease, transform 1s ease;
+    }
+    .fade-section.visible { opacity: 1; transform: translateY(0); }
+
+    .bio-photo {
+      opacity: 0; transform: translateY(50px) scale(0.9);
+      transition: all 1s ease;
+      border-radius: 0 !important;
+    }
+    .bio-photo.visible { opacity: 1; transform: translateY(0) scale(1); }
+
+    /* Remove rounded corners from gallery images */
+    #gallery img {
+      border-radius: 0 !important;
+    }
+
+    @media (min-width: 768px) {
+      #menu-btn { display: none; }
+      #desktop-nav { display: flex; }
+    }
+  </style>
+</head>
+<body class="splash-active">
+
+  <!-- SPLASH -->
+  <section id="splash">
+    <img src="images/prints-20251022T032850Z-1-001/prints/prints/Untitled_Artwork 31.png" alt="Splash Art">
+    <button id="enter-btn" class="hover-glow text-7xl relative z-10">ENTER</button>
+  </section>
+
+  <!-- HOME -->
+  <section id="home" class="hidden relative h-screen w-full overflow-hidden">
+    <video id="video-bg" autoplay muted loop playsinline src="your-video.mp4"></video>
+
+    <!-- Desktop Nav -->
+    <nav id="desktop-nav">
+      <a href="#home" class="hover-glow">Home</a>
+      <a href="#bio" class="hover-glow">Biography</a>
+      <a href="#gallery" class="hover-glow">Gallery</a>
+      <a href="#pricing" class="hover-glow">Pricing</a>
+      <a href="#contact" class="hover-glow">Contact</a>
+      <a href="https://your-insta-link" target="_blank" aria-label="Instagram">
+        <i class="fab fa-instagram text-2xl insta-icon"></i>
+      </a>
+    </nav>
+
+    <!-- Mobile Nav -->
+    <div id="menu-btn" class="menu-btn md:hidden">
+      <span></span><span></span><span></span>
+    </div>
+
+    <nav id="mobile-menu" class="flex-col text-3xl">
+      <a href="#home" class="hover-glow">Home</a>
+      <a href="#bio" class="hover-glow">Biography</a>
+      <a href="#gallery" class="hover-glow">Gallery</a>
+      <a href="#pricing" class="hover-glow">Pricing</a>
+      <a href="#contact" class="hover-glow">Contact</a>
+      <a href="https://your-insta-link" target="_blank" aria-label="Instagram">
+        <i class="fab fa-instagram text-5xl insta-icon"></i>
+      </a>
+    </nav>
+
+    <!-- Center Logo -->
+    <div class="absolute inset-0 flex items-center justify-center z-10">
+      <img src="images/THE WOOKED WITCH LOGO.png" alt="Main Logo" id="main-logo" />
+    </div>
+  </section>
+
+  <!-- BIO -->
+  <section id="bio" class="fade-section min-h-screen flex flex-col md:flex-row justify-center items-center px-8 bg-[var(--eggplant)] text-center md:text-left">
+    <div class="md:w-1/2 flex justify-center mb-8 md:mb-0">
+      <img src="images/biopic/PHOTO_THE_WOOKED_WITCH.jpg" alt="The Wooked Witch" class="bio-photo shadow-lg max-w-xs md:max-w-sm" />
+    </div>
+    <div class="md:w-1/2 flex flex-col items-center md:items-start space-y-6">
+      <h2 class="text-4xl mb-2 hover-glow">Biography</h2>
+      <p class="max-w-lg text-lg leading-relaxed">
+        The Wooked Witch is a visionary VJ and live visual artist who combines original live drawings and liquid animations to create immersive, intentional experiences.
+      </p>
+      <p class="max-w-lg text-lg leading-relaxed">
+        Guided by synesthesia and their background in music, they translate sound into flowing, organic visuals. Their unconventional approach combines mixed media into glitch-style animations, creating a fusion of organic and digital distortion.
+      </p>
+      <p class="max-w-lg text-lg leading-relaxed">
+        The Wooked Witch crafts mesmerizing journeys that blend the senses and paint the seams between worlds.
+      </p>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="gallery" class="fade-section min-h-screen bg-black flex flex-col items-center justify-center px-6 py-20">
+    <h2 class="text-4xl mb-10 hover-glow">Gallery</h2>
+    <div class="columns-1 sm:columns-2 md:columns-3 gap-4 max-w-6xl w-full">
+      <img src="images/prints-20251022T032850Z-1-001/prints/prints/Color/IMG_0224.png" class="w-full mb-4 hover:scale-105 transition-transform duration-500" />
+      <img src="images/prints-20251022T032850Z-1-001/prints/prints/Color/IMG_0650.jpeg" class="w-full mb-4 hover:scale-105 transition-transform duration-500" />
+      <img src="images/prints-20251022T032850Z-1-001/prints/prints/Color/IMG_0651.jpeg" class="w-full mb-4 hover:scale-105 transition-transform duration-500" />
+      <img src="images/prints-20251022T032850Z-1-001/prints/prints/Color/IMG_0669.png" class="w-full mb-4 hover:scale-105 transition-transform duration-500" />
+      <img src="images/prints-20251022T032850Z-1-001/prints/prints/Color/IMG_0775.PNG" class="w-full mb-4 hover:scale-105 transition-transform duration-500" />
+      <img src="images/prints-20251022T032850Z-1-001/prints/prints/Color/IMG_1455.PNG" class="w-full mb-4 hover:scale-105 transition-transform duration-500" />
+      <img src="images/prints-20251022T032850Z-1-001/prints/prints/Color/Untitled_Artwork 12.png" class="w-full mb-4 hover:scale-105 transition-transform duration-500" />
+      <img src="images/prints-20251022T032850Z-1-001/prints/prints/Color/Untitled_Artwork 14.png" class="w-full mb-4 hover:scale-105 transition-transform duration-500" />
+      <img src="images/prints-20251022T032850Z-1-001/prints/prints/Color/Untitled_Artwork 43.png" class="w-full mb-4 hover:scale-105 transition-transform duration-500" />
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section id="pricing" class="fade-section min-h-screen bg-[var(--eggplant)] flex flex-col items-center justify-center text-center px-8 py-20">
+    <h2 class="text-4xl hover-glow mb-8">Pricing</h2>
+    <div class="space-y-8 text-lg max-w-2xl">
+      <p class="text-sm text-gray-400 italic mt-4">
+        Travel and equipment costs may apply depending on location.
+      </p>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="fade-section min-h-screen bg-black flex flex-col items-center justify-center">
+    <h2 class="text-4xl hover-glow mb-4">Contact</h2>
+    <p>Email: <a href="mailto:your@email.com" class="hover-glow"></a></p>
+  </section>
+
+  <script>
+    const enterBtn = document.getElementById('enter-btn');
+    const splash = document.getElementById('splash');
+    const splashImg = document.querySelector('#splash img');
+    const home = document.getElementById('home');
+    const logo = document.getElementById('main-logo');
+
+    home.style.visibility = 'hidden';
+
+    enterBtn.addEventListener('click', () => {
+      splashImg.classList.add('glitch-active');
+      setTimeout(() => {
+        splash.style.display = 'none';
+        document.body.classList.remove('splash-active');
+        home.classList.remove('hidden');
+        home.classList.add('revealed');
+        home.style.visibility = 'visible';
+        window.scrollTo({ top: 0 });
+        setTimeout(() => logo.classList.add('visible'), 300);
+      }, 1000);
+    });
+
+    const menuBtn = document.getElementById('menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    menuBtn.addEventListener('click', () => {
+      menuBtn.classList.toggle('open');
+      mobileMenu.classList.toggle('active');
+    });
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.remove('active');
+        menuBtn.classList.remove('open');
+      });
+    });
+
+    const fadeSections = document.querySelectorAll('.fade-section');
+    const bioPhoto = document.querySelector('.bio-photo');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          if (entry.target.contains(bioPhoto)) bioPhoto.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.2 });
+    fadeSections.forEach(section => observer.observe(section));
+  </script>
+</body>
+</html>
