@@ -55,6 +55,11 @@
       overflow: hidden;
       z-index: 100;
     }
+    /* Fix mobile viewport height bug causing bio text to peek out under splash */
+#splash {
+  height: 100dvh; /* dynamic viewport height for mobile */
+}
+
 
     #splash img {
       max-height: 70vh;
