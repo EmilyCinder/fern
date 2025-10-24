@@ -59,6 +59,10 @@
 #splash {
   height: 100dvh; /* dynamic viewport height for mobile */
 }
+/* Keep ONLY the splash visible until it's removed */
+body.splash-active > *:not(#splash) {
+  display: none !important;
+}
 
 
     #splash img {
@@ -197,6 +201,13 @@
       border-radius: 0 !important;
     }
 
+    img {
+  pointer-events: none;
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+
     @media (min-width: 768px) {
       #menu-btn { display: none; }
       #desktop-nav { display: flex; }
@@ -205,7 +216,7 @@
 </head>
 <body class="splash-active">
 
-  <!-- SPLASH -->
+<!-- SPLASH --> 
   <section id="splash">
     <img src="images/prints-20251022T032850Z-1-001/prints/prints/Btw/b8.png" alt="Splash Art">
     <button id="enter-btn" class="hover-glow text-7xl relative z-10">ENTER</button>
@@ -436,5 +447,11 @@
     }, { threshold: 0.2 });
     fadeSections.forEach(section => observer.observe(section));
   </script>
+  <script>
+// Disable right-click and drag on the entire page
+document.addEventListener('contextmenu', event => event.preventDefault());
+document.addEventListener('dragstart', event => event.preventDefault());
+</script>
+
 </body>
 </html>
